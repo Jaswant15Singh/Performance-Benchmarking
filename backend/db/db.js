@@ -11,9 +11,9 @@ const pool = new Pool({
   maxUses: 7500,
 });
 
-pool.on("connect", async (client) => {
-  await client.query("SET search_path TO my_schema");
-});
+// pool.on("connect", async (client) => {
+//   await client.query("SET search_path TO my_schema");
+// });
 
 
 module.exports = pool;
