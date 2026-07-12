@@ -6,10 +6,10 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const folder =
       file.fieldname === "product_image"
-        ? "uploads/products"
+        ? "public/uploads/products"
         : file.fieldname === "category_image"
-          ? "uploads/categories"
-          : "uploads/misc";
+          ? "public/uploads/categories"
+          : "public/uploads/misc";
 
     fs.mkdirSync(folder, { recursive: true }); 
     cb(null, folder);
