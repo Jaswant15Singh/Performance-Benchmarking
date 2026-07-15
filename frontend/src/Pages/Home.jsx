@@ -1,8 +1,6 @@
 import { useState } from "react";
 import "../stylesheets/Home.css";
-
-
-
+import NavbarComponent from "../Components/Navbar";
 export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -16,7 +14,7 @@ export default function Home() {
 
   return (
     <div className="page">
-      <header className="header">
+      {/* <header className="header">
         <div className="container header-inner">
           <h1 className="logo">FreshCart</h1>
           <nav className="nav">
@@ -27,13 +25,13 @@ export default function Home() {
           </nav>
           <button className="btn btn-primary">Shop now</button>
         </div>
-      </header>
-
+      </header> */}
+      <NavbarComponent/>
       <section className="container hero">
         <div className="hero-text">
           <h2>Groceries delivered to your door, the same day.</h2>
           <p>
-            Fresh fruits, vegetables, dairy and more — sourced locally and
+            Fresh fruits, vegetables, dairy and more - sourced locally and
             delivered fast. No subscriptions, no hassle.
           </p>
           <div className="hero-buttons">
@@ -47,7 +45,7 @@ export default function Home() {
 
       <section id="contact" className="newsletter">
         <h3>Get updates on new products</h3>
-        <p>We'll send occasional emails, no spam.</p>
+        {/* <p>We'll send occasional emails, no spam.</p> */}
         {submitted ? (
           <p className="newsletter-success">Thanks, you're subscribed.</p>
         ) : (
