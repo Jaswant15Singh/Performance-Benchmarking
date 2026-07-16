@@ -90,15 +90,16 @@ export default  memo(function AddProductForm({isFormOpen,setIsFormOpen,refresh,s
     <form className="form-card" onSubmit={handleSubmit}>
       <h3 style={{ marginTop: 0 }}>Add product</h3>
       <button
-      onClick={handleClick}
+        onClick={handleClick}
         style={{
           position: "absolute",
           right: "15px",
           top: "25px",
           borderRadius: "5px",
           border: "none",
-          background: "#58def1",
-          padding:"5px 10px"
+          background: "#2e7d32",
+          padding: "6px 10px",
+          color:"white"
         }}
       >
         X

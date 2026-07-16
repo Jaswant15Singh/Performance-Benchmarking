@@ -92,8 +92,9 @@ console.log(data);
           top: "25px",
           borderRadius: "5px",
           border: "none",
-          background: "#58def1",
-          padding: "5px 10px",
+          background: "#2e7d32",
+          padding: "6px 10px",
+          color:"white"
         }}
       >
         X

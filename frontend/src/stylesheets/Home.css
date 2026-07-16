@@ -128,7 +128,8 @@ body {
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  /* row-gap: 30px; */
+  gap: 3rem;
 }
 
 @media (max-width: 600px) {
@@ -149,7 +150,7 @@ body {
 }
 
 .card:hover {
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.13);
 }
 
 .card-icon {
@@ -167,6 +168,8 @@ body {
   border-radius: 6px;
   padding: 16px;
   text-align: left;
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.13);
+
 }
 
 .product-category {
@@ -275,4 +278,13 @@ body {
   width: 100%;
   /* display: ; */
   z-index: 1 !important;
+}
+
+.product-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 2; /* standard property, for browsers that support it */
 }
