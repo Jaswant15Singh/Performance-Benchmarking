@@ -1,9 +1,48 @@
 import NavbarComponent from "../Components/Navbar";
 import "../stylesheets/Home.css";
+import { useState,useEffect } from "react";
 const Product = () => {
+    const [products,setProducts]=useState([]);
+    const [error,setError]=useState(null);
+    useEffect(()=>{
+            const controller = new AbortController();
+
+         async function fetchProducts() {
+           try {
+             const result = await fetch("http://localhost:3000/api/products");
+             const data = await result.json();
+             setProducts(data.data);
+           } catch (error) {
+             console.log(error);
+             setError(error);
+           }
+         }
+         fetchProducts();
+         return()=>{
+            controller.abort();
+         }
+    },[])
+
+   
   return (
     <div className="page">
-        <NavbarComponent/>
+      <NavbarComponent />
+      <section id="products" className="container section">
+        <h3>Popular products</h3>
+        <div className="grid">
+          {products.map((p) => (
+            <div key={p.product_id} className="product-card">
+              <img src={`http://localhost:3000/uploads/products/${p.product_image}`} width="100%" style={{aspectRatio:"1/1",cursor:"pointer"}} alt={p.product_name} />
+              <div className="product-category">{p.product_name}</div>
+              <div className="product-name">{p.product_name}</div>
+              <div className="product-row">
+                <span className="product-price">{p.product_price}</span>
+                <button className="btn btn-small">Add</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };
