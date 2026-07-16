@@ -45,12 +45,13 @@ const category = {
     }
   },
 
-  addCategory: async (req, res, next) => {
-    console.log(1);
+  addCategory: async (req, res, next) => {    
+    console.log(11);
     
     try {
       const { category_name, category_description } = req.body;
-
+      console.log(req.body);
+      
       if (!category_name) {
         return res.status(400).json({
           success: false,

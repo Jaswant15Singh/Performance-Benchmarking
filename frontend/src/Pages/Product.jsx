@@ -17,7 +17,7 @@ const Product = () => {
         setProducts(data.data);
       } catch (error) {
         console.log(error);
-        setError(error);
+        // setError(error);
       }
     }
     fetchProducts();
