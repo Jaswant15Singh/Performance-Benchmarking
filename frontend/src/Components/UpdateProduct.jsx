@@ -7,7 +7,7 @@ export default memo(function UpdateProduct({
   setIsFormOpen,
   refresh,
   setRefresh,
-  id
+  id,
 }) {
   const [form, setForm] = useState({
     product_name: "",
@@ -15,29 +15,52 @@ export default memo(function UpdateProduct({
     product_price: "",
     category_id: "",
   });
+  const [categories, setCategories] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-   useEffect(() => {
-       const controller = new AbortController();
-       const getCategory = async () => {
-         const result = await fetch(`http://localhost:3000/api/product/${id}`);
-         const data = await result.json();
-         
-         setForm({
-           product_name: data.data.product_name,
-           product_description: data.data.product_description,
-           product_price:data.data.product_price,
-           category_id:data.data.category_id?data.data.category_id:2
-         });
-       };
-       getCategory();
-       return () => {
-         controller.abort();
-       };
-     },[]);
+  useEffect(() => {
+    const controller = new AbortController();
+    const getProduct = async () => {
+      try {
+        const result = await fetch(`http://localhost:3000/api/product/${id}`, {
+          signal: controller.signal,
+        });
+        const data = await result.json();
+
+        setForm({
+          product_name: data.data.product_name || "",
+          product_description: data.data.product_description || "",
+          product_price: data.data.product_price ?? "",
+          category_id: data.data.category_id ? data.data.category_id : 2,
+        });
+      } catch (err) {
+        if (err.name !== "AbortError") console.error(err);
+      }
+    };
+    getProduct();
+    return () => controller.abort();
+  }, [id]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const getCategories = async () => {
+      try {
+        const result = await fetch(`http://localhost:3000/api/categories`, {
+          signal: controller.signal,
+        });
+        const data = await result.json();
+        setCategories(data.data || []);
+      } catch (err) {
+        if (err.name !== "AbortError") console.error(err);
+      }
+    };
+    getCategories();
+    return () => controller.abort();
+  }, []);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -67,7 +90,7 @@ export default memo(function UpdateProduct({
     try {
       setLoading(true);
       const res = await fetch(`http://localhost:3000/api/product/${id}`, {
-        method: "Put",
+        method: "PUT",
         body: data,
       });
       const result = await res.json();
@@ -168,15 +191,20 @@ export default memo(function UpdateProduct({
       </div>
 
       <div className="form-group">
-        <label htmlFor="category_id">Category ID</label>
-        <input
+        <label htmlFor="category_id">Category</label>
+        <select
           id="category_id"
           name="category_id"
-          type="text"
           value={form.category_id}
           onChange={handleChange}
-          placeholder="1"
-        />
+        >
+          <option value="">Select a category</option>
+          {categories.map((cat) => (
+            <option key={cat.category_id} value={cat.category_id}>
+              {cat.category_name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="form-group">
