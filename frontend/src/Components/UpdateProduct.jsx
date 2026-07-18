@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { memo } from "react";
 import "../stylesheets/Product.css";
 
-export default memo(function AddProductForm({
+export default memo(function UpdateProduct({
   isFormOpen,
   setIsFormOpen,
   refresh,
   setRefresh,
+  id
 }) {
   const [form, setForm] = useState({
     product_name: "",
@@ -14,28 +15,29 @@ export default memo(function AddProductForm({
     product_price: "",
     category_id: "",
   });
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const getCategories = async () => {
-      try {
-        const result = await fetch(`http://localhost:3000/api/categories`);
-        const data = await result.json();
-        setCategories(data.data || []);
-      } catch (err) {
-        if (err.name !== "AbortError") console.error(err);
-      }
-    };
-    getCategories();
-    return () => controller.abort();
-  }, []);
-
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
+   useEffect(() => {
+       const controller = new AbortController();
+       const getCategory = async () => {
+         const result = await fetch(`http://localhost:3000/api/product/${id}`);
+         const data = await result.json();
+         
+         setForm({
+           product_name: data.data.product_name,
+           product_description: data.data.product_description,
+           product_price:data.data.product_price,
+           category_id:data.data.category_id?data.data.category_id:2
+         });
+       };
+       getCategory();
+       return () => {
+         controller.abort();
+       };
+     },[]);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -64,8 +66,8 @@ export default memo(function AddProductForm({
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3000/api/product", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+        method: "Put",
         body: data,
       });
       const result = await res.json();
@@ -110,7 +112,7 @@ export default memo(function AddProductForm({
 
   return (
     <form className="form-card" onSubmit={handleSubmit}>
-      <h3 style={{ marginTop: 0 }}>Add product</h3>
+      <h3 style={{ marginTop: 0 }}>Update product</h3>
       <button
         onClick={handleClick}
         style={{
@@ -166,20 +168,15 @@ export default memo(function AddProductForm({
       </div>
 
       <div className="form-group">
-        <label htmlFor="category_id">Category</label>
-        <select
+        <label htmlFor="category_id">Category ID</label>
+        <input
           id="category_id"
           name="category_id"
+          type="text"
           value={form.category_id}
           onChange={handleChange}
-        >
-          <option value="">Select a category</option>
-          {categories.map((cat) => (
-            <option key={cat.category_id} value={cat.category_id}>
-              {cat.category_name}
-            </option>
-          ))}
-        </select>
+          placeholder="1"
+        />
       </div>
 
       <div className="form-group">

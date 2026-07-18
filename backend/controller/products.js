@@ -55,6 +55,7 @@ const product = {
         product_description,
         product_stock,
         product_price,
+        category_id
       } = req.body;
 
       if (!product_name || product_price === undefined) {
@@ -67,8 +68,8 @@ const product = {
       const product_image = req.file ? req.file.filename : null;
 
       const result = await pool.query(
-        `INSERT INTO products (product_name, product_description, product_image, product_stock, product_price)
-       VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO products (product_name, product_description, product_image, product_stock, product_price,category_id)
+       VALUES ($1, $2, $3, $4, $5,$6)
        RETURNING *`,
         [
           product_name,
@@ -76,6 +77,7 @@ const product = {
           product_image,
           product_stock,
           product_price,
+          category_id
         ],
       );
 
@@ -93,6 +95,7 @@ const product = {
         product_description,
         product_stock,
         product_price,
+        category_id
       } = req.body;
 
       if (!Number.isInteger(Number(id))) {
@@ -110,6 +113,7 @@ const product = {
            product_image = COALESCE($3, product_image),
            product_stock = COALESCE($4, product_stock),
            product_price = COALESCE($5, product_price)
+           category_id=COALESCE($5, category_id)
        WHERE product_id = $6
        RETURNING *`,
         [
@@ -118,6 +122,7 @@ const product = {
           product_image,
           product_stock,
           product_price,
+          category_id,
           id,
         ],
       );
