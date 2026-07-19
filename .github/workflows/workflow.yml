@@ -24,4 +24,6 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Docker build
       working-directory: ./backend
-      run: docker build -t ${{secrets.DOCKER_USER }}/desertaion:latest .
+      run: docker build -t ${{secrets.DOCKER_USER }}/desertaion .
+    - name: Docker push
+      run: docker push ${{ secrets.DOCKER_USER }}/desertaion    
