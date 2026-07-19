@@ -1,0 +1,18 @@
+name: Desertation workflow
+on:
+  push: 
+    branches: [dev,main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: workflow start
+      uses: actions/checkout@v2
+
+    - name: installing node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+      run: npm ci
+    
