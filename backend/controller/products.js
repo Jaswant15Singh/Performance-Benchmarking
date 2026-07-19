@@ -90,6 +90,10 @@ const product = {
   updateProduct: async (req, res, next) => {
     try {
       const { id } = req.params;
+      console.log(req.body);
+      console.log(req.file);
+      
+      
       const {
         product_name,
         product_description,
@@ -112,9 +116,9 @@ const product = {
            product_description = COALESCE($2, product_description),
            product_image = COALESCE($3, product_image),
            product_stock = COALESCE($4, product_stock),
-           product_price = COALESCE($5, product_price)
-           category_id=COALESCE($5, category_id)
-       WHERE product_id = $6
+           product_price = COALESCE($5, product_price),
+           category_id=COALESCE($6, category_id)
+       WHERE product_id = $7
        RETURNING *`,
         [
           product_name,
