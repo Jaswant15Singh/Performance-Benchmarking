@@ -1,0 +1,29 @@
+name: Desertation workflow
+on:
+  push: 
+    branches: [dev,main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: workflow start
+      uses: actions/checkout@v2
+
+    - name: installing node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22.21.1'
+    - name: Install dependencies
+      working-directory: ./backend
+      run: npm ci
+    - name: Docker login
+      uses: docker/login-action@v4
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Docker build
+      working-directory: ./backend
+      run: docker build -t ${{secrets.DOCKER_USER }}/desertaion .
+    - name: Docker push
+      run: docker push ${{ secrets.DOCKER_USER }}/desertaion    
