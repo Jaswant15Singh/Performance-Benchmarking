@@ -45,7 +45,7 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  ECS_CLUSTER: desertation-backend-cluster
+  ECS_CLUSTER: desertation-backend
   ECS_SERVICE: desertation-backend-service
   ECS_TASK_FAMILY: desertation-backend
   LAMBDA_FUNCTION: your-lambda-function-name
