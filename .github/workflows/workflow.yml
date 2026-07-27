@@ -48,7 +48,7 @@ env:
   ECS_CLUSTER: desertation-backend-cluster
   ECS_SERVICE: desertation-backend-service
   ECS_TASK_FAMILY: desertation-backend
-  LAMBDA_FUNCTION: your-lambda-function-name
+  # LAMBDA_FUNCTION: your-lambda-function-name
 
 jobs:
   build:
