@@ -3,7 +3,7 @@ const NavbarComponent = () => {
   return (
     <header className="header">
       <div className="container header-inner">
-        <h1 className="logo">FreshCart</h1>
+        <Link to="/" className="logo">FreshCart</Link>
         <nav className="nav">
           {/* <a href="#">Home</a> */}
           <Link to="/">Home</Link>

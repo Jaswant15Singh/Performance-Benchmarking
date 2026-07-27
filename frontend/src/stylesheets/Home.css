@@ -82,6 +82,7 @@ body {
   gap: 40px;
   padding: 60px 16px;
   flex-wrap: wrap;
+    min-height: 70vh;
 }
 
 .hero-text {

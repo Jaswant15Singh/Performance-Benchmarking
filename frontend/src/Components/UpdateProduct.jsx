@@ -19,7 +19,7 @@ export default memo(function UpdateProduct({
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -99,7 +99,7 @@ export default memo(function UpdateProduct({
         throw new Error(result.message || "Something went wrong");
       }
 
-      setSuccess(true);
+      // setSuccess(true);
       setForm({
         product_name: "",
         product_description: "",
@@ -113,6 +113,8 @@ export default memo(function UpdateProduct({
     } finally {
       setLoading(false);
       setRefresh(!refresh);
+      setIsFormOpen(!isFormOpen);
+
     }
   };
 
@@ -122,16 +124,16 @@ export default memo(function UpdateProduct({
     setIsFormOpen(!isFormOpen);
   };
 
-  if (success) {
-    return (
-      <div className="form-card">
-        <p className="form-success">Product added.</p>
-        <button className="btn" onClick={() => setSuccess(false)}>
-          Add another
-        </button>
-      </div>
-    );
-  }
+  // if (success) {
+  //   return (
+  //     <div className="form-card">
+  //       <p className="form-success">Product added.</p>
+  //       <button className="btn" onClick={() => setSuccess(false)}>
+  //         Add another
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <form className="form-card" onSubmit={handleSubmit}>
@@ -223,7 +225,7 @@ export default memo(function UpdateProduct({
         className="btn btn-primary form-submit"
         disabled={loading}
       >
-        {loading ? "Adding..." : "Add product"}
+        {loading ? "Adding..." : "Update product"}
       </button>
     </form>
   );
