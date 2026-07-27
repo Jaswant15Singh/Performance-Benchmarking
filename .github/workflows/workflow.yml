@@ -48,7 +48,7 @@ env:
   ECS_CLUSTER: desertation-backend-cluster
   ECS_SERVICE: desertation-backend-service
   ECS_TASK_FAMILY: desertation-backend
-  # LAMBDA_FUNCTION: your-lambda-function-name
+  LAMBDA_FUNCTION: your-lambda-function-name
 
 jobs:
   build:
@@ -86,19 +86,19 @@ jobs:
     - name: Push ECS image
       run: docker push ${{ steps.ecr-login.outputs.registry }}/desertation-ecs:latest
 
-    # - name: Register new ECS task definition (EC2)
-    #   working-directory: ./backend
-    #   run: |
-    #     sed -i "s|PLACEHOLDER_IMAGE|${{ steps.ecr-login.outputs.registry }}/desertation-ecs:latest|" ecs-task-def.json
-    #     aws ecs register-task-definition --cli-input-json file://ecs-task-def.json
+    - name: Register new ECS task definition (EC2)
+      working-directory: ./backend
+      run: |
+        sed -i "s|PLACEHOLDER_IMAGE|${{ steps.ecr-login.outputs.registry }}/desertation-ecs:latest|" ecs-task-def.json
+        aws ecs register-task-definition --cli-input-json file://ecs-task-def.json
 
-    # - name: Deploy to ECS
-    #   run: |
-    #     aws ecs update-service \
-    #       --cluster ${{ env.ECS_CLUSTER }} \
-    #       --service ${{ env.ECS_SERVICE }} \
-    #       --task-definition ${{ env.ECS_TASK_FAMILY }} \
-    #       --force-new-deployment
+    - name: Deploy to ECS
+      run: |
+        aws ecs update-service \
+          --cluster ${{ env.ECS_CLUSTER }} \
+          --service ${{ env.ECS_SERVICE }} \
+          --task-definition ${{ env.ECS_TASK_FAMILY }} \
+          --force-new-deployment
 
     # - name: Build Lambda image
     #   working-directory: ./backend
