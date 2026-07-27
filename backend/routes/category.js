@@ -8,4 +8,4 @@ router.post("/category",upload.single("category_image"),category.addCategory)
 router.put("/category/:id",upload.single("category_image"),category.updateCategory);
 router.get("/category/:id",category.getCategoryById);
 router.delete("/category/:id",category.deleteCategory);
-module.exports=router;
+module.exports=router
