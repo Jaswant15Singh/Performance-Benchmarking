@@ -4,5 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --production
 COPY . .
+ENV PORT=3000
+ENV AWS_LWA_READINESS_CHECK_PATH=/api/products
 EXPOSE 3000
 CMD ["node", "server.js"]
