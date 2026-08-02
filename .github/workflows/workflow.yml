@@ -109,7 +109,6 @@ jobs:
     - name: Push Lambda image
       run: docker push ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest
 
-
     # - name: Deploy to Lambda
     #   run: |
     #     aws lambda update-function-code \
