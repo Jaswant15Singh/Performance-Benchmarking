@@ -100,17 +100,17 @@ jobs:
           --task-definition ${{ env.ECS_TASK_FAMILY }} \
           --force-new-deployment
 
-    # - name: Build Lambda image
-    #   working-directory: ./backend
-    #   run: |
-    #     docker build -f Dockerfile.lambda \
-    #       -t ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest .
+    - name: Build Lambda image
+      working-directory: ./backend
+      run: |
+        docker build -f Dockerfile.lambda \
+          -t ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest .
 
-    # - name: Push Lambda image
-    #   run: docker push ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest
+    - name: Push Lambda image
+      run: docker push ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest
 
-    # - name: Deploy to Lambda
-    #   run: |
-    #     aws lambda update-function-code \
-    #       --function-name ${{ env.LAMBDA_FUNCTION }} \
-    #       --image-uri ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest
+    - name: Deploy to Lambda
+      run: |
+        aws lambda update-function-code \
+          --function-name ${{ env.LAMBDA_FUNCTION }} \
+          --image-uri ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest
