@@ -1,4 +1,5 @@
 const pool = require("../db/db.js");
+const {file_utils}=require("../middlewares/multer.js")
 const product = {
   getProducts: async (req, res, next) => {
     try {
@@ -45,16 +46,14 @@ const product = {
   },
 
   addProduct: async (req, res, next) => {
-    try {
-      console.log(req.body);
-      console.log(req.file);
-      
+    try {      
       
       const {
         product_name,
         product_description,
         product_stock,
         product_price,
+        category_id
       } = req.body;
 
       if (!product_name || product_price === undefined) {
@@ -67,8 +66,8 @@ const product = {
       const product_image = req.file ? req.file.filename : null;
 
       const result = await pool.query(
-        `INSERT INTO products (product_name, product_description, product_image, product_stock, product_price)
-       VALUES ($1, $2, $3, $4, $5)
+        `INSERT INTO products (product_name, product_description, product_image, product_stock, product_price,category_id)
+       VALUES ($1, $2, $3, $4, $5,$6)
        RETURNING *`,
         [
           product_name,
@@ -76,6 +75,7 @@ const product = {
           product_image,
           product_stock,
           product_price,
+          category_id
         ],
       );
 
@@ -88,11 +88,16 @@ const product = {
   updateProduct: async (req, res, next) => {
     try {
       const { id } = req.params;
+      // console.log(req.body);
+      // console.log(req.file);
+      
+      
       const {
         product_name,
         product_description,
         product_stock,
         product_price,
+        category_id
       } = req.body;
 
       if (!Number.isInteger(Number(id))) {
@@ -102,15 +107,21 @@ const product = {
       }
 
       const product_image = req.file ? req.file.filename : null; 
-
+      const isPresent=await pool.query("SELECT * FROM products where product_id=$1",[id]);
+      console.log(isPresent.rows);
+      
+      if(isPresent.rows.length<1){
+        return res.status(404).json({success:false, message:"No product found"})
+      }
       const result = await pool.query(
         `UPDATE products
        SET product_name = COALESCE($1, product_name),
            product_description = COALESCE($2, product_description),
            product_image = COALESCE($3, product_image),
            product_stock = COALESCE($4, product_stock),
-           product_price = COALESCE($5, product_price)
-       WHERE product_id = $6
+           product_price = COALESCE($5, product_price),
+           category_id=COALESCE($6, category_id)
+       WHERE product_id = $7
        RETURNING *`,
         [
           product_name,
@@ -118,6 +129,7 @@ const product = {
           product_image,
           product_stock,
           product_price,
+          category_id,
           id,
         ],
       );
@@ -127,7 +139,8 @@ const product = {
           .status(404)
           .json({ success: false, message: "Product not found" });
       }
-
+      // console.log("image is:",result.rows[0]);
+      file_utils.DeleteFile(`/uploads/products/${isPresent.rows[0].product_image}`)
       res.status(200).json({ success: true, data: result.rows[0] });
     } catch (error) {
       next({ message: error.message });

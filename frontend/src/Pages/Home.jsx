@@ -1,16 +1,17 @@
 import { useState } from "react";
 import "../stylesheets/Home.css";
 import NavbarComponent from "../Components/Navbar";
+import { Link } from "react-router-dom";
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [submitted, setSubmitted] = useState(false);
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
-    setEmail("");
-  };
+  // const handleSubscribe = (e) => {
+  //   e.preventDefault();
+  //   if (!email) return;
+  //   setSubmitted(true);
+  //   setEmail("");
+  // };
 
   return (
     <div className="page">
@@ -35,17 +36,16 @@ export default function Home() {
             delivered fast. No subscriptions, no hassle.
           </p>
           <div className="hero-buttons">
-            <button className="btn btn-primary">Start shopping</button>
-            <button className="btn">Browse categories</button>
+            <Link to="/products" className="btn btn-primary">Start shopping</Link>
+            <Link to="/categories" className="btn">Browse categories</Link>
           </div>
         </div>
         <div className="hero-image">🛒</div>
       </section>
 
 
-      <section id="contact" className="newsletter">
+      {/* <section id="contact" className="newsletter">
         <h3>Get updates on new products</h3>
-        {/* <p>We'll send occasional emails, no spam.</p> */}
         {submitted ? (
           <p className="newsletter-success">Thanks, you're subscribed.</p>
         ) : (
@@ -62,7 +62,7 @@ export default function Home() {
             </button>
           </form>
         )}
-      </section>
+      </section> */}
 
       <footer className="footer">
         <div className="container footer-inner">

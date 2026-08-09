@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import AddProductForm from "../Components/AddProduct";
 import NavbarComponent from "../Components/Navbar";
+import UpdateProduct from "../Components/UpdateProduct";
 import "../stylesheets/Home.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -33,11 +34,12 @@ const IndividualProduct = () => {
     <>
       {isFormOpen && (
         <div className="overlay">
-          <AddProductForm
+          <UpdateProduct
             isFormOpen={isFormOpen}
             setIsFormOpen={setIsFormOpen}
             refresh={refresh}
             setRefresh={setRefresh}
+            id={id}
           />
         </div>
       )}
@@ -62,20 +64,18 @@ const IndividualProduct = () => {
             }}
           >
             <div style={{ maxWidth: "320px" }}>
-              <Link to={`/product/${products.product_id}`}>
-                <img
-                  src={`http://localhost:3000/uploads/products/${products.product_image}`}
-                  width="100%"
-                  style={{
-                    aspectRatio: "1/1",
-                    cursor: "pointer",
-                    objectFit: "cover",
-                    borderRadius: "10px",
-                    boxShadow: " 0 0px 20px rgba(0, 0, 0, 0.13)",
-                  }}
-                  alt={products.product_name}
-                />
-              </Link>
+              <img
+                src={`http://localhost:3000/uploads/products/${products.product_image}`}
+                width="100%"
+                style={{
+                  aspectRatio: "1/1",
+                  cursor: "pointer",
+                  objectFit: "contain",
+                  borderRadius: "10px",
+                  boxShadow: " 0 0px 20px rgba(0, 0, 0, 0.13)",
+                }}
+                alt={products.product_name}
+              />
             </div>
 
             <div
@@ -101,6 +101,21 @@ const IndividualProduct = () => {
               >
                 <span className="product-price">{products.product_price}</span>
               </div>
+              <button
+                style={{
+                 width:"fit-content",
+                  borderRadius: "5px",
+                  background: "#2e7d32",
+                  padding: "6px 10px",
+                  color: "white",
+                  border: "none",
+                }}
+                onClick={() => {
+                  setIsFormOpen(!isFormOpen);
+                }}
+              >
+                Update Product
+              </button>
             </div>
           </div>
         </section>

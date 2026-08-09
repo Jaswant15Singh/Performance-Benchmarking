@@ -2,6 +2,7 @@ import AddCategoryForm from "../Components/AddCategory";
 import NavbarComponent from "../Components/Navbar";
 import "../stylesheets/Home.css";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 const Category = () => {
   const [category, setCategory] = useState([]);
   // const [error, setError] = useState(null);
@@ -52,8 +53,10 @@ const Category = () => {
               top: "30px",
               right: "10px",
               borderRadius: "5px",
-              background: "#58def1",
-              padding: "3px 10px",
+              background: "#2e7d32",
+              padding: "6px 10px",
+              color: "white",
+              border: "none",
             }}
             onClick={() => {
               setIsFormOpen(!isFormOpen);
@@ -64,15 +67,16 @@ const Category = () => {
           <div className="grid">
             {category.map((p) => (
               <div key={p.category_id} className="product-card">
-                <img
-                  src={`http://localhost:3000/uploads/categories/${p.category_image}`}
-                  width="100%"
-                  style={{ aspectRatio: "1/1", cursor: "pointer" }}
-                  alt={p.category_name}
-                />
+                <Link to={`/category/${p.category_id}`}>
+                  <img
+                    src={`http://localhost:3000/uploads/categories/${p.category_image}`}
+                    width="100%"
+                    style={{ aspectRatio: "1/1", cursor: "pointer" }}
+                    alt={p.category_name}
+                  />
+                </Link>
                 <div className="product-category">{p.category_name}</div>
-                <div className="product-name">{p.category_name}</div>
-                
+                <div className="product-name product-name">{p.category_description}</div>
               </div>
             ))}
           </div>

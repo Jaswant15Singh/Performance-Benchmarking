@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { memo } from "react";
 import "../stylesheets/Product.css";
 
-export default  memo(function AddCategoryForm({isFormOpen,setIsFormOpen,refresh,setRefresh}) {
+export default memo(function UpdateCategory({
+  isFormOpen,
+  setIsFormOpen,
+  refresh,
+  setRefresh,
+  id
+}) {
   const [form, setForm] = useState({
     category_name: "",
     category_description: "",
@@ -12,6 +18,18 @@ export default  memo(function AddCategoryForm({isFormOpen,setIsFormOpen,refresh,
   const [loading, setLoading] = useState(false);
   // const [success, setSuccess] = useState(false);
 
+   useEffect(() => {
+     const controller = new AbortController();
+     const getCategory = async () => {
+       const result = await fetch(`http://localhost:3000/api/category/${id}`);
+       const data = await result.json();
+       setForm({...form,category_name:data.data.category_name,category_description:data.data.category_description});
+     };
+     getCategory();
+     return () => {
+       controller.abort();
+     };
+   },[]);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -35,12 +53,12 @@ export default  memo(function AddCategoryForm({isFormOpen,setIsFormOpen,refresh,
     if (imageFile) {
       data.append("category_image", imageFile);
     }
-console.log(data);
+    console.log(data);
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3000/api/category", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/api/category/${id}`, {
+        method: "PUT",
         body: data,
       });
       const result = await res.json();
@@ -61,30 +79,30 @@ console.log(data);
     } finally {
       setLoading(false);
       setRefresh(!refresh);
-      setIsFormOpen(!isFormOpen)
+      setIsFormOpen(!isFormOpen);
     }
   };
 
-  const handleClick=(e)=>{
+  const handleClick = (e) => {
     console.log(e);
     e.stopPropagation();
-    setIsFormOpen(!isFormOpen)
-  }
+    setIsFormOpen(!isFormOpen);
+  };
 
-  // if (success) {
-  //   return (
-  //     <div className="form-card">
-  //       <p className="form-success">Category added.</p>
-  //       <button className="btn" onClick={() => setSuccess(false)}>
-  //         Add another
-  //       </button>
-  //     </div>
-  //   );
-  // }
+//   if (success) {
+//     return (
+//       <div className="form-card">
+//         <p className="form-success">Category added.</p>
+//         <button className="btn" onClick={() => setSuccess(false)}>
+//           Add another
+//         </button>
+//       </div>
+//     );
+//   }
 
   return (
     <form className="form-card" onSubmit={handleSubmit}>
-      <h3 style={{ marginTop: 0 }}>Add Category</h3>
+      <h3 style={{ marginTop: 0 }}>Update Category</h3>
       <button
         onClick={handleClick}
         style={{
@@ -95,7 +113,7 @@ console.log(data);
           border: "none",
           background: "#2e7d32",
           padding: "6px 10px",
-          color:"white"
+          color: "white",
         }}
       >
         X
@@ -145,4 +163,4 @@ console.log(data);
       </button>
     </form>
   );
-})
+});
