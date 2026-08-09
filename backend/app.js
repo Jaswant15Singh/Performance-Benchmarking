@@ -15,7 +15,7 @@ app.use('/test',(req,res)=>{
     res.send("ttest")
 })
 app.use("/api/products",(req,res)=>{
-    res.json({success:"true"});
+    res.json({success:"trues"});
 })
 app.use((err,req,res,next)=>{    
     res.status(500).json({success:false, message:err.message})
