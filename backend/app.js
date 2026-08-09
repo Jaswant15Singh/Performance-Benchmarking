@@ -11,9 +11,9 @@ app.use(express.static("public"));
 app.use("/api", categoryRouter);
 app.use("/api", productRouter);
 
-// app.use('/test',(req,res)=>{
-//     res.send("ttest")
-// })
+app.use('/test',(req,res)=>{
+    res.send("ttest")
+})
 app.use((err,req,res,next)=>{    
     res.status(500).json({success:false, message:err.message})
 })
