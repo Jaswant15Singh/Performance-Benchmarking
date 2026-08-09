@@ -12,7 +12,7 @@ app.use(express.static("public"));
 // app.use("/api", productRouter);
 
 app.use('/test',(req,res)=>{
-    res.send("ttest")
+    res.send("ttest is working")
 })
 app.use("/api/products",(req,res)=>{
     res.json({success:"trues"});
