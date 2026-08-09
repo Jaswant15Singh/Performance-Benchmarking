@@ -10,7 +10,7 @@ export default  memo(function AddCategoryForm({isFormOpen,setIsFormOpen,refresh,
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -49,7 +49,7 @@ console.log(data);
         throw new Error(result.message || "Something went wrong");
       }
 
-      setSuccess(true);
+      // setSuccess(true);
       setForm({
         category_name: "",
         category_description: "",
@@ -60,7 +60,8 @@ console.log(data);
       setError(err.message);
     } finally {
       setLoading(false);
-      setRefresh(!refresh)
+      setRefresh(!refresh);
+      setIsFormOpen(!isFormOpen)
     }
   };
 
@@ -70,16 +71,16 @@ console.log(data);
     setIsFormOpen(!isFormOpen)
   }
 
-  if (success) {
-    return (
-      <div className="form-card">
-        <p className="form-success">Category added.</p>
-        <button className="btn" onClick={() => setSuccess(false)}>
-          Add another
-        </button>
-      </div>
-    );
-  }
+  // if (success) {
+  //   return (
+  //     <div className="form-card">
+  //       <p className="form-success">Category added.</p>
+  //       <button className="btn" onClick={() => setSuccess(false)}>
+  //         Add another
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <form className="form-card" onSubmit={handleSubmit}>

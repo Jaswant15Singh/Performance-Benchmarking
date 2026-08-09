@@ -16,7 +16,7 @@ export default memo(function UpdateCategory({
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
    useEffect(() => {
      const controller = new AbortController();
@@ -67,7 +67,7 @@ export default memo(function UpdateCategory({
         throw new Error(result.message || "Something went wrong");
       }
 
-      setSuccess(true);
+      // setSuccess(true);
       setForm({
         category_name: "",
         category_description: "",
@@ -79,6 +79,7 @@ export default memo(function UpdateCategory({
     } finally {
       setLoading(false);
       setRefresh(!refresh);
+      setIsFormOpen(!isFormOpen);
     }
   };
 

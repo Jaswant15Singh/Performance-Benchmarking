@@ -1,4 +1,5 @@
 const pool = require("../db/db.js");
+const {file_utils}=require("../middlewares/multer.js")
 const product = {
   getProducts: async (req, res, next) => {
     try {
@@ -45,10 +46,7 @@ const product = {
   },
 
   addProduct: async (req, res, next) => {
-    try {
-      console.log(req.body);
-      console.log(req.file);
-      
+    try {      
       
       const {
         product_name,
@@ -90,8 +88,8 @@ const product = {
   updateProduct: async (req, res, next) => {
     try {
       const { id } = req.params;
-      console.log(req.body);
-      console.log(req.file);
+      // console.log(req.body);
+      // console.log(req.file);
       
       
       const {
@@ -109,7 +107,12 @@ const product = {
       }
 
       const product_image = req.file ? req.file.filename : null; 
-
+      const isPresent=await pool.query("SELECT * FROM products where product_id=$1",[id]);
+      console.log(isPresent.rows);
+      
+      if(isPresent.rows.length<1){
+        return res.status(404).json({success:false, message:"No product found"})
+      }
       const result = await pool.query(
         `UPDATE products
        SET product_name = COALESCE($1, product_name),
@@ -136,7 +139,8 @@ const product = {
           .status(404)
           .json({ success: false, message: "Product not found" });
       }
-
+      // console.log("image is:",result.rows[0]);
+      file_utils.DeleteFile(`/uploads/products/${isPresent.rows[0].product_image}`)
       res.status(200).json({ success: true, data: result.rows[0] });
     } catch (error) {
       next({ message: error.message });

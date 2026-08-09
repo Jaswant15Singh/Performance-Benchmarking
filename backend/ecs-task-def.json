@@ -1,0 +1,21 @@
+{
+  "family": "desertation-backend",
+  "requiresCompatibilities": ["EC2"],
+  "networkMode": "bridge",
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "image": "PLACEHOLDER_IMAGE",
+      "cpu": 256,
+      "memory": 512,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  ]
+}

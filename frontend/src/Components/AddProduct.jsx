@@ -34,7 +34,7 @@ export default memo(function AddProductForm({
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -74,7 +74,7 @@ export default memo(function AddProductForm({
         throw new Error(result.message || "Something went wrong");
       }
 
-      setSuccess(true);
+      // setSuccess(true);
       setForm({
         product_name: "",
         product_description: "",
@@ -97,16 +97,16 @@ export default memo(function AddProductForm({
     setIsFormOpen(!isFormOpen);
   };
 
-  if (success) {
-    return (
-      <div className="form-card">
-        <p className="form-success">Product added.</p>
-        <button className="btn" onClick={() => setSuccess(false)}>
-          Add another
-        </button>
-      </div>
-    );
-  }
+  // if (success) {
+  //   return (
+  //     <div className="form-card">
+  //       <p className="form-success">Product added.</p>
+  //       <button className="btn" onClick={() => setSuccess(false)}>
+  //         Add another
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <form className="form-card" onSubmit={handleSubmit}>

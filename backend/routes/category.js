@@ -1,6 +1,6 @@
 const express=require("express");
 const category=require("../controller/category.js");
-const upload = require("../middlewares/multer.js");
+const {upload} = require("../middlewares/multer.js");
 const router=express.Router();
 
 router.get("/categories", category.getCategory);

@@ -2,6 +2,24 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
+const file_utils = {
+  DeleteFile: (file_path) => {
+    // if (!file_path) {
+    //   console.log("A File is not present");
+    //   return;
+    // }
+  
+    
+    // const fullPath = path.join(__dirname, "../public", file_path);
+    // fs.unlink(fullPath, (err) => {
+    //   if (err) {
+    //     console.error(`Error deleting file: ${err.message}`);
+    //     return;
+    //   }
+    //   console.log(`File deleted: ${file_path}`);
+    // });
+  },
+};
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {    
     const folder =
@@ -35,4 +53,4 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
-module.exports = upload;
+module.exports = {upload,file_utils};
