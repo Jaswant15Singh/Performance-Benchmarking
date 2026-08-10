@@ -50,6 +50,7 @@ jobs:
       working-directory: ./backend
       run: |
         sed -i "s|PLACEHOLDER_IMAGE|${{ steps.ecr-login.outputs.registry }}/desertation-ecs:latest|" ecs-task-def.json
+        sed -i "s|CONNECTIONSTRING_PLACEHOLDER|${{ secrets.CONNECTIONSTRING }}|" ecs-task-def.json
         aws ecs register-task-definition --cli-input-json file://ecs-task-def.json
 
     - name: Deploy to ECS
@@ -74,3 +75,12 @@ jobs:
         aws lambda update-function-code \
           --function-name ${{ env.LAMBDA_FUNCTION }} \
           --image-uri ${{ steps.ecr-login.outputs.registry }}/desertation-lambda:latest
+
+        aws lambda wait function-updated \
+          --function-name ${{ env.LAMBDA_FUNCTION }}
+
+    - name: Update Lambda environment variables
+      run: |
+        aws lambda update-function-configuration \
+          --function-name ${{ env.LAMBDA_FUNCTION }} \
+          --environment "Variables={CONNECTIONSTRING=${{ secrets.CONNECTIONSTRING }}}"

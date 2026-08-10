@@ -15,6 +15,9 @@
           "hostPort": 0,
           "protocol": "tcp"
         }
+      ],
+      "environment": [
+        { "name": "CONNECTIONSTRING", "value": "CONNECTIONSTRING_PLACEHOLDER" }
       ]
     }
   ]
