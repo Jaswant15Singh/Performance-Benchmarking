@@ -1,10 +1,11 @@
 import pandas as pd
 import boto3
+from datetime import datetime, timezone
 
 asg_client = boto3.client('autoscaling', region_name='us-east-2')
 
-EC2_HOURLY = 0.0104  
-ALB_HOURLY = 0.0225   
+EC2_HOURLY = 0.0104
+ALB_HOURLY = 0.0225
 
 response = asg_client.describe_scaling_activities(
     AutoScalingGroupName='Desertation-ASG'
@@ -24,11 +25,18 @@ for activity in activities:
         terminations[iid] = activity['StartTime']
 
 instances = []
+still_running = []
+
 for iid, start in launches.items():
     if iid in terminations:
-        instances.append({"id": iid, "start": start, "end": terminations[iid]})
+        instances.append({"id": iid, "start": start, "end": terminations[iid], "status": "terminated"})
     else:
-        print(f"Note: {iid} has no terminate event yet (still running)")
+        now = datetime.now(timezone.utc)
+        instances.append({"id": iid, "start": start, "end": now, "status": "still running"})
+        still_running.append(iid)
+
+if still_running:
+    print(f"Note: {len(still_running)} instance(s) still running (cost calculated up to NOW): {still_running}\n")
 
 print("=" * 60)
 print("EC2 INSTANCE COST BREAKDOWN")
@@ -45,8 +53,13 @@ for inst in instances:
     cost = EC2_HOURLY * hours
     total_hours += hours
     total_ec2_cost += cost
-    rows.append({"Instance": inst["id"], "Hours": round(hours, 3), "Cost ($)": round(cost, 5)})
-    print(f"{inst['id']}: {hours:.3f} hours -> ${cost:.5f}")
+    rows.append({
+        "Instance": inst["id"],
+        "Status": inst["status"],
+        "Hours": round(hours, 3),
+        "Cost ($)": round(cost, 5)
+    })
+    print(f"{inst['id']} [{inst['status']}]: {hours:.3f} hours -> ${cost:.5f}")
 
 df = pd.DataFrame(rows)
 print("\n" + df.to_string(index=False))
