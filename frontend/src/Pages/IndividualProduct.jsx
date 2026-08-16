@@ -1,4 +1,5 @@
 // import { Link } from "react-router-dom";
+import { base_url } from "../../constant";
 import AddProductForm from "../Components/AddProduct";
 import NavbarComponent from "../Components/Navbar";
 import UpdateProduct from "../Components/UpdateProduct";
@@ -17,7 +18,7 @@ const IndividualProduct = () => {
 
     async function fetchProducts() {
       try {
-        const result = await fetch(`http://localhost:3000/api/product/${id}`);
+        const result = await fetch(`${base_url}api/product/${id}`);
         const data = await result.json();
         setProducts(data.data);
       } catch (error) {
@@ -65,7 +66,7 @@ const IndividualProduct = () => {
           >
             <div style={{ maxWidth: "320px" }}>
               <img
-                src={`http://localhost:3000/uploads/products/${products.product_image}`}
+                src={`${base_url}uploads/products/${products.product_image}`}
                 width="100%"
                 style={{
                   aspectRatio: "1/1",

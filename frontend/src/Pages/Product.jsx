@@ -3,6 +3,7 @@ import AddProductForm from "../Components/AddProduct";
 import NavbarComponent from "../Components/Navbar";
 import "../stylesheets/Home.css";
 import { useState, useEffect } from "react";
+import { base_url } from "../../constant";
 const Product = () => {
   const [products, setProducts] = useState([]);
   // const [error, setError] = useState(null);
@@ -13,7 +14,7 @@ const Product = () => {
 
     async function fetchProducts() {
       try {
-        const result = await fetch("http://localhost:3000/api/products");
+        const result = await fetch(`${base_url}api/products`);
         const data = await result.json();
         console.log(data);
         
@@ -71,7 +72,7 @@ const Product = () => {
               <div key={p.product_id} className="product-card">
                 <Link to={`/product/${p.product_id}`}>
                   <img
-                    src={`http://localhost:3000/uploads/products/${p.product_image}`}
+                    src={`${base_url}uploads/products/${p.product_image}`}
                     width="100%"
                     style={{ aspectRatio: "1/1", cursor: "pointer" }}
                     alt={p.product_name}

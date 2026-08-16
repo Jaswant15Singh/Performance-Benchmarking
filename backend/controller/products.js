@@ -55,7 +55,8 @@ const product = {
         product_price,
         category_id
       } = req.body;
-
+      console.log(req.body);
+      
       if (!product_name || product_price === undefined) {
         return res.status(400).json({
           success: false,

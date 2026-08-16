@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { memo } from "react";
 import "../stylesheets/Product.css";
+import { base_url } from "../../constant";
 
 export default memo(function AddProductForm({
   isFormOpen,
@@ -20,7 +21,7 @@ export default memo(function AddProductForm({
     const controller = new AbortController();
     const getCategories = async () => {
       try {
-        const result = await fetch(`http://localhost:3000/api/categories`);
+        const result = await fetch(`${base_url}api/categories`);
         const data = await result.json();
         setCategories(data.data || []);
       } catch (err) {
@@ -64,7 +65,7 @@ export default memo(function AddProductForm({
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3000/api/product", {
+      const res = await fetch(`${base_url}api/product`, {
         method: "POST",
         body: data,
       });

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { memo } from "react";
 import "../stylesheets/Product.css";
+import { base_url } from "../../constant";
 
 export default  memo(function AddCategoryForm({isFormOpen,setIsFormOpen,refresh,setRefresh}) {
   const [form, setForm] = useState({
@@ -39,7 +40,7 @@ console.log(data);
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3000/api/category", {
+      const res = await fetch(`${base_url}api/category`, {
         method: "POST",
         body: data,
       });

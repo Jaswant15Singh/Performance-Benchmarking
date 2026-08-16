@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 // import AddCategory from "../Components/AddCategory";
 import UpdateCategory from "../Components/UpdateCategory";
+import { base_url } from "../../constant";
 
 const IndividualCategory = () => {
   const [category, setCategory] = useState([]);
@@ -17,7 +18,7 @@ const IndividualCategory = () => {
 
     async function fetchProducts() {
       try {
-        const result = await fetch(`http://localhost:3000/api/category/${id}`);
+        const result = await fetch(`${base_url}api/category/${id}`);
         const data = await result.json();
         console.log(data.data);
         
@@ -69,7 +70,7 @@ const IndividualCategory = () => {
           >
             <div style={{ maxWidth: "320px" }}>
               <img
-                src={`http://localhost:3000/uploads/categories/${category.category_image}`}
+                src={`${base_url}uploads/categories/${category.category_image}`}
                 width="100%"
                 style={{
                   aspectRatio: "1/1",

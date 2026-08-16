@@ -67,12 +67,9 @@ export default function Home() {
       <footer className="footer">
         <div className="container footer-inner">
           <p>
-            &copy; {new Date().getFullYear()} FreshCart. All rights reserved.
+            &copy; {new Date().getFullYear()} Jaswant Freshcart.
           </p>
-          <div className="footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-          </div>
+          
         </div>
       </footer>
     </div>

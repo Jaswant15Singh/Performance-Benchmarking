@@ -1,3 +1,4 @@
+import { base_url } from "../../constant";
 import AddCategoryForm from "../Components/AddCategory";
 import NavbarComponent from "../Components/Navbar";
 import "../stylesheets/Home.css";
@@ -13,7 +14,7 @@ const Category = () => {
 
     async function fetchCategory() {
       try {
-        const result = await fetch("http://localhost:3000/api/categories");
+        const result = await fetch(`${base_url}api/categories`);
         const data = await result.json();
         setCategory(data.data);
       } catch (error) {
@@ -69,7 +70,7 @@ const Category = () => {
               <div key={p.category_id} className="product-card">
                 <Link to={`/category/${p.category_id}`}>
                   <img
-                    src={`http://localhost:3000/uploads/categories/${p.category_image}`}
+                    src={`${base_url}uploads/categories/${p.category_image}`}
                     width="100%"
                     style={{ aspectRatio: "1/1", cursor: "pointer" }}
                     alt={p.category_name}

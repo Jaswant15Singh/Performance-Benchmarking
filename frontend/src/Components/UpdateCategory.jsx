@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { memo } from "react";
 import "../stylesheets/Product.css";
+import { base_url } from "../../constant";
 
 export default memo(function UpdateCategory({
   isFormOpen,
@@ -21,7 +22,7 @@ export default memo(function UpdateCategory({
    useEffect(() => {
      const controller = new AbortController();
      const getCategory = async () => {
-       const result = await fetch(`http://localhost:3000/api/category/${id}`);
+       const result = await fetch(`${base_url}api/category/${id}`);
        const data = await result.json();
        setForm({...form,category_name:data.data.category_name,category_description:data.data.category_description});
      };
@@ -57,7 +58,7 @@ export default memo(function UpdateCategory({
 
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:3000/api/category/${id}`, {
+      const res = await fetch(`${base_url}api/category/${id}`, {
         method: "PUT",
         body: data,
       });

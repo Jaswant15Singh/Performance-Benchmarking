@@ -9,9 +9,8 @@ const NavbarComponent = () => {
           <Link to="/">Home</Link>
           <Link to="/categories">Categories</Link>
           <Link to="/products">Products</Link>
-          <Link to="/contact">Contact</Link>
         </nav>
-        <button className="btn btn-primary">Shop now</button>
+        <Link to="/products" className="btn btn-primary">Shop now</Link>
       </div>
     </header>
   );

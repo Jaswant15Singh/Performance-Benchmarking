@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { memo } from "react";
 import "../stylesheets/Product.css";
+import { base_url } from "../../constant";
 
 export default memo(function UpdateProduct({
   isFormOpen,
@@ -25,7 +26,7 @@ export default memo(function UpdateProduct({
     const controller = new AbortController();
     const getProduct = async () => {
       try {
-        const result = await fetch(`http://localhost:3000/api/product/${id}`, {
+        const result = await fetch(`${base_url}api/product/${id}`, {
           signal: controller.signal,
         });
         const data = await result.json();
@@ -48,7 +49,7 @@ export default memo(function UpdateProduct({
     const controller = new AbortController();
     const getCategories = async () => {
       try {
-        const result = await fetch(`http://localhost:3000/api/categories`, {
+        const result = await fetch(`${base_url}api/categories`, {
           signal: controller.signal,
         });
         const data = await result.json();
@@ -89,7 +90,7 @@ export default memo(function UpdateProduct({
 
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:3000/api/product/${id}`, {
+      const res = await fetch(`${base_url}api/product/${id}`, {
         method: "PUT",
         body: data,
       });
