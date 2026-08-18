@@ -11,7 +11,7 @@ const product = {
         .json(
           result.rows.length < 1
             ? { success: true, message: "No products exist", data: [] }
-            : { success: true, data: result.rows },
+            : { success: true, data: result.rows,message:"all products fetched" },
         );
     } catch (error) {
       next({ message: error.message });

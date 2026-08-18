@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "../stylesheets/Home.css";
 import NavbarComponent from "../Components/Navbar";
 import { Link } from "react-router-dom";
 export default function Home() {
+const [weather,setWeather]=useState('');
+ useEffect(()=>{
+     const getWeather=async()=>{
+       let url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=Dublin &appid=00ff5679c7f76386d63846772ebab5ed`;
+       const data=await fetch(url);
+       const result=await data.json()
+      //  console.log(await data.json());
+       setWeather(result.main.temp)
+     }
+     getWeather();
+ },[])
   // const [email, setEmail] = useState("");
   // const [submitted, setSubmitted] = useState(false);
 
@@ -27,7 +38,7 @@ export default function Home() {
           <button className="btn btn-primary">Shop now</button>
         </div>
       </header> */}
-      <NavbarComponent/>
+      <NavbarComponent />
       <section className="container hero">
         <div className="hero-text">
           <h2>Groceries delivered to your door, the same day.</h2>
@@ -36,13 +47,16 @@ export default function Home() {
             delivered fast. No subscriptions, no hassle.
           </p>
           <div className="hero-buttons">
-            <Link to="/products" className="btn btn-primary">Start shopping</Link>
-            <Link to="/categories" className="btn">Browse categories</Link>
+            <Link to="/products" className="btn btn-primary">
+              Start shopping
+            </Link>
+            <Link to="/categories" className="btn">
+              Browse categories
+            </Link>
           </div>
         </div>
         <div className="hero-image">🛒</div>
       </section>
-
 
       {/* <section id="contact" className="newsletter">
         <h3>Get updates on new products</h3>
@@ -66,11 +80,9 @@ export default function Home() {
 
       <footer className="footer">
         <div className="container footer-inner">
-          <p>
-            &copy; {new Date().getFullYear()} Jaswant Freshcart.
-          </p>
-          
+          <p>&copy; {new Date().getFullYear()} Jaswant Freshcart.</p>
         </div>
+        <p>{weather}</p>
       </footer>
     </div>
   );
