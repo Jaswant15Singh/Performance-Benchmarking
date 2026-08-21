@@ -16,11 +16,9 @@ app.use('/weather',async(req,res)=>{
          "https://api.openweathermap.org/data/2.5/weather?units=metric&q=Dublin &appid=00ff5679c7f76386d63846772ebab5ed"
        );
        const result=await data.json();
-       res.status(200).json(result)
+       res.status(200).json({result,message:"This is a public api"})
 })
-// app.use("/api/products",(req,res)=>{
-//     res.json({success:"trues"});
-// })
+
 app.use((err,req,res,next)=>{    
     res.status(500).json({success:false, message:err.message})
 })
