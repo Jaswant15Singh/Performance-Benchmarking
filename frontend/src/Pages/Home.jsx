@@ -2,13 +2,14 @@ import { useState,useEffect } from "react";
 import "../stylesheets/Home.css";
 import NavbarComponent from "../Components/Navbar";
 import { Link } from "react-router-dom";
+import { base_url } from "../../constant";
 export default function Home() {
 const [weather,setWeather]=useState('');
  useEffect(()=>{
      const getWeather=async()=>{
-       let url = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=Dublin &appid=00ff5679c7f76386d63846772ebab5ed`;
+       let url = `${base_url}weather`;
        const data=await fetch(url);
-       const result=await data.json()
+       const result=await data.json()       
       //  console.log(await data.json());
        setWeather(result.main.temp)
      }
@@ -81,8 +82,15 @@ const [weather,setWeather]=useState('');
       <footer className="footer">
         <div className="container footer-inner">
           <p>&copy; {new Date().getFullYear()} Jaswant Freshcart.</p>
+          <p>
+            Today's Weather:{" "}
+            <h6>
+              <b style={{fontWeight:"bolder"}}>
+                {weather} <span>&#176;</span>
+              </b>
+            </h6>
+          </p>
         </div>
-        <p>{weather}</p>
       </footer>
     </div>
   );

@@ -11,9 +11,13 @@ app.use(express.static("public"));
 app.use("/api", categoryRouter);
 app.use("/api", productRouter);
 
-// app.use('/test',(req,res)=>{
-//     res.send("ttest is working")
-// })
+app.use('/weather',async(req,res)=>{
+       const data = await fetch(
+         "https://api.openweathermap.org/data/2.5/weather?units=metric&q=Dublin &appid=00ff5679c7f76386d63846772ebab5ed"
+       );
+       const result=await data.json();
+       res.status(200).json(result)
+})
 // app.use("/api/products",(req,res)=>{
 //     res.json({success:"trues"});
 // })
