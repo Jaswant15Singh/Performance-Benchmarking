@@ -87,7 +87,7 @@ const category = {
           .json({ success: false, message: "Invalid category id" });
       }
 
-      const category_image = req.file ? req.file.filename : null; // null = keep existing via COALESCE
+      const category_image = req.file ? req.file.filename : null; 
 
       const result = await pool.query(
         `UPDATE category

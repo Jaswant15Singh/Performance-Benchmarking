@@ -9,9 +9,11 @@ const [weather,setWeather]=useState('');
      const getWeather=async()=>{
        let url = `${base_url}weather`;
        const data=await fetch(url);
-       const result=await data.json()       
+       const result=await data.json()    
+       console.log(result);
+          
       //  console.log(await data.json());
-       setWeather(result.main.temp)
+       setWeather(result.result.main.temp)
      }
      getWeather();
  },[])
@@ -83,12 +85,11 @@ const [weather,setWeather]=useState('');
         <div className="container footer-inner">
           <p>&copy; {new Date().getFullYear()} Jaswant Freshcart.</p>
           <p>
-            Today's Weather:{" "}
-            <h6>
-              <b style={{fontWeight:"bolder"}}>
+            Today's Weather:
+           
+              <b style={{fontWeight:"bolder",fontSize:"16px"}}>
                 {weather} <span>&#176;</span>
               </b>
-            </h6>
           </p>
         </div>
       </footer>
